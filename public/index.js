@@ -60,10 +60,8 @@ function removeCodec(sdp) {
   const lines = sdp.split('\r\n');
   const newLines = [];
   const codecs = getFormats(sdp);
-  console.info(`Offered codecs: ${codecs}`);
   const vp8PayloadType = getVP8PayloadType(sdp);
   const vp8RtxPayloadType = getVP8RtxPayloadType(sdp, vp8PayloadType);
-  console.info(`VP8 payload type: ${vp8PayloadType}, RTX: ${vp8RtxPayloadType}`);
   if (codecs.includes(vp8PayloadType) && codecs.includes(vp8RtxPayloadType)) {
     lines.forEach(line => {
       if (line.startsWith('m=video')) {
@@ -96,6 +94,13 @@ async function negotiate() {
   try {
     const offer = await pc1.createOffer(offerOptions);
 //    console.info(`Offer: ${offer.sdp}`);
+
+    const codecs = getFormats(offer.sdp);
+    console.info(`Offered codecs: ${codecs}`);
+    const vp8PayloadType = getVP8PayloadType(offer.sdp);
+    const vp8RtxPayloadType = getVP8RtxPayloadType(offer.sdp, vp8PayloadType);
+    console.info(`VP8 payload type: ${vp8PayloadType}, RTX: ${vp8RtxPayloadType}`);
+
     await pc1.setLocalDescription(offer);
     await pc2.setRemoteDescription(offer);
     const answer = await pc2.createAnswer();
