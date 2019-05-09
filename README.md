@@ -9,8 +9,12 @@ Simple script showing Microsoft Edge bug for PeerConnection#createOffer().
 5. Set remote description
 6. Create an offer, observe that it only includes three codecs, 100 (VP8), 96 (RTX for VP8) and 107 (H.264). RTX for H.264 is missing.
 
+
 Running
 -------
 
     npm install
     npm start
+
+Open [http://localhost:3000](http://localhost:3000) in Microsoft Edge, click the Connect button and then the Generate Offer button. Observer the console output for the offered codecs.
+
